@@ -1,0 +1,2836 @@
+file_input
+  expr_stmt
+    string	"""
+Parts of this file were taken from the pyzmq project
+(https://github.com/zeromq/pyzmq) which have been permitted for use under the
+BSD license. Parts are from lxml (https://github.com/lxml/lxml)
+"""
+  import_stmt
+    import_name
+      dotted_as_names
+        dotted_as_name
+          dotted_name
+            name	argparse
+          None
+  import_stmt
+    import_name
+      dotted_as_names
+        dotted_as_name
+          dotted_name
+            name	multiprocessing
+          None
+  import_stmt
+    import_name
+      dotted_as_names
+        dotted_as_name
+          dotted_name
+            name	os
+          None
+  import_stmt
+    import_from
+      dotted_name
+        name	os
+        name	path
+      import_as_names
+        import_as_name
+          name	join
+          name	pjoin
+  import_stmt
+    import_name
+      dotted_as_names
+        dotted_as_name
+          dotted_name
+            name	platform
+          None
+  import_stmt
+    import_name
+      dotted_as_names
+        dotted_as_name
+          dotted_name
+            name	shutil
+          None
+  import_stmt
+    import_name
+      dotted_as_names
+        dotted_as_name
+          dotted_name
+            name	sys
+          None
+  import_stmt
+    import_from
+      dotted_name
+        name	sysconfig
+      import_as_names
+        import_as_name
+          name	get_config_vars
+          None
+  import_stmt
+    import_name
+      dotted_as_names
+        dotted_as_name
+          dotted_name
+            name	numpy
+          None
+  import_stmt
+    import_from
+      dotted_name
+        name	pkg_resources
+      import_as_names
+        import_as_name
+          name	parse_version
+          None
+  import_stmt
+    import_from
+      dotted_name
+        name	setuptools
+      import_as_names
+        import_as_name
+          name	Command
+          None
+        import_as_name
+          name	Extension
+          None
+        import_as_name
+          name	setup
+          None
+  import_stmt
+    import_from
+      dotted_name
+        name	setuptools
+        name	command
+        name	build_ext
+      import_as_names
+        import_as_name
+          name	build_ext
+          name	_build_ext
+  import_stmt
+    import_name
+      dotted_as_names
+        dotted_as_name
+          dotted_name
+            name	versioneer
+          None
+  assign_stmt
+    assign
+      var
+        name	cmdclass
+      funccall
+        getattr
+          var
+            name	versioneer
+          name	get_cmdclass
+        None
+  funcdef
+    name	is_platform_windows
+    None
+    None
+    suite
+      return_stmt
+        or_test
+          comparison
+            getattr
+              var
+                name	sys
+              name	platform
+            comp_op	==
+            string	"win32"
+          comparison
+            getattr
+              var
+                name	sys
+              name	platform
+            comp_op	==
+            string	"cygwin"
+  funcdef
+    name	is_platform_mac
+    None
+    None
+    suite
+      return_stmt
+        comparison
+          getattr
+            var
+              name	sys
+            name	platform
+          comp_op	==
+          string	"darwin"
+  assign_stmt
+    assign
+      var
+        name	min_cython_ver
+      string	"0.29.32"
+  try_stmt
+    suite
+      import_stmt
+        import_from
+          dotted_name
+            name	Cython
+          import_as_names
+            import_as_name
+              name	Tempita
+              None
+            import_as_name
+              name	__version__
+              name	_CYTHON_VERSION
+      import_stmt
+        import_from
+          dotted_name
+            name	Cython
+            name	Build
+          import_as_names
+            import_as_name
+              name	cythonize
+              None
+      assign_stmt
+        assign
+          var
+            name	_CYTHON_INSTALLED
+          comparison
+            funccall
+              var
+                name	parse_version
+              arguments
+                var
+                  name	_CYTHON_VERSION
+            comp_op	>=
+            funccall
+              var
+                name	parse_version
+              arguments
+                var
+                  name	min_cython_ver
+    except_clauses
+      except_clause
+        var
+          name	ImportError
+        None
+        suite
+          assign_stmt
+            assign
+              var
+                name	_CYTHON_VERSION
+              const_none
+          assign_stmt
+            assign
+              var
+                name	_CYTHON_INSTALLED
+              const_false
+          assign_stmt
+            assign
+              var
+                name	cythonize
+              lambdef
+                lambda_params
+                  name	x
+                  lambda_starparams
+                    name	args
+                    lambda_kwparams
+                      name	kwargs
+                var
+                  name	x
+    None
+    None
+  assign_stmt
+    assign
+      var
+        name	_pxi_dep_template
+      dict
+        key_value
+          string	"algos"
+          list
+            string	"_libs/algos_common_helper.pxi.in"
+            string	"_libs/algos_take_helper.pxi.in"
+        key_value
+          string	"hashtable"
+          list
+            string	"_libs/hashtable_class_helper.pxi.in"
+            string	"_libs/hashtable_func_helper.pxi.in"
+            string	"_libs/khash_for_primitive_helper.pxi.in"
+        key_value
+          string	"index"
+          list
+            string	"_libs/index_class_helper.pxi.in"
+        key_value
+          string	"sparse"
+          list
+            string	"_libs/sparse_op_helper.pxi.in"
+        key_value
+          string	"interval"
+          list
+            string	"_libs/intervaltree.pxi.in"
+  assign_stmt
+    assign
+      var
+        name	_pxifiles
+      list
+  assign_stmt
+    assign
+      var
+        name	_pxi_dep
+      dict
+  for_stmt
+    exprlist
+      var
+        name	module
+      var
+        name	files
+    funccall
+      getattr
+        var
+          name	_pxi_dep_template
+        name	items
+      None
+    suite
+      assign_stmt
+        assign
+          var
+            name	pxi_files
+          list_comprehension
+            comprehension
+              funccall
+                var
+                  name	pjoin
+                arguments
+                  string	"pandas"
+                  var
+                    name	x
+              comp_fors
+                comp_for
+                  None
+                  var
+                    name	x
+                  var
+                    name	files
+              None
+      expr_stmt
+        funccall
+          getattr
+            var
+              name	_pxifiles
+            name	extend
+          arguments
+            var
+              name	pxi_files
+      assign_stmt
+        assign
+          getitem
+            var
+              name	_pxi_dep
+            var
+              name	module
+          var
+            name	pxi_files
+    None
+  classdef
+    name	build_ext
+    arguments
+      var
+        name	_build_ext
+    suite
+      decorated
+        decorators
+          decorator
+            dotted_name
+              name	classmethod
+            None
+        funcdef
+          name	render_templates
+          parameters
+            name	cls
+            name	pxifiles
+            None
+            None
+          None
+          suite
+            for_stmt
+              var
+                name	pxifile
+              var
+                name	pxifiles
+              suite
+                assert_stmt
+                  funccall
+                    getattr
+                      var
+                        name	pxifile
+                      name	endswith
+                    arguments
+                      string	".pxi.in"
+                  None
+                assign_stmt
+                  assign
+                    var
+                      name	outfile
+                    getitem
+                      var
+                        name	pxifile
+                      slice
+                        None
+                        factor
+                          -
+                          number	3
+                        None
+                if_stmt
+                  and_test
+                    funccall
+                      getattr
+                        getattr
+                          var
+                            name	os
+                          name	path
+                        name	exists
+                      arguments
+                        var
+                          name	outfile
+                    comparison
+                      getattr
+                        funccall
+                          getattr
+                            var
+                              name	os
+                            name	stat
+                          arguments
+                            var
+                              name	pxifile
+                        name	st_mtime
+                      comp_op	<
+                      getattr
+                        funccall
+                          getattr
+                            var
+                              name	os
+                            name	stat
+                          arguments
+                            var
+                              name	outfile
+                        name	st_mtime
+                  suite
+                    continue_stmt
+                  elifs
+                  None
+                with_stmt
+                  with_items
+                    with_item
+                      funccall
+                        var
+                          name	open
+                        arguments
+                          var
+                            name	pxifile
+                      name	f
+                  suite
+                    assign_stmt
+                      assign
+                        var
+                          name	tmpl
+                        funccall
+                          getattr
+                            var
+                              name	f
+                            name	read
+                          None
+                assign_stmt
+                  assign
+                    var
+                      name	pyxcontent
+                    funccall
+                      getattr
+                        var
+                          name	Tempita
+                        name	sub
+                      arguments
+                        var
+                          name	tmpl
+                with_stmt
+                  with_items
+                    with_item
+                      funccall
+                        var
+                          name	open
+                        arguments
+                          var
+                            name	outfile
+                          string	"w"
+                      name	f
+                  suite
+                    expr_stmt
+                      funccall
+                        getattr
+                          var
+                            name	f
+                          name	write
+                        arguments
+                          var
+                            name	pyxcontent
+              None
+      funcdef
+        name	build_extensions
+        parameters
+          name	self
+          None
+          None
+        None
+        suite
+          if_stmt
+            var
+              name	_CYTHON_INSTALLED
+            suite
+              expr_stmt
+                funccall
+                  getattr
+                    var
+                      name	self
+                    name	render_templates
+                  arguments
+                    var
+                      name	_pxifiles
+            elifs
+            None
+          expr_stmt
+            funccall
+              getattr
+                funccall
+                  var
+                    name	super
+                  None
+                name	build_extensions
+              None
+  classdef
+    name	CleanCommand
+    arguments
+      var
+        name	Command
+    suite
+      expr_stmt
+        string	"""Custom command to clean the .so and .pyc files."""
+      assign_stmt
+        assign
+          var
+            name	user_options
+          list
+            tuple
+              string	"all"
+              string	"a"
+              string	""
+      funcdef
+        name	initialize_options
+        parameters
+          name	self
+          None
+          None
+        None
+        suite
+          assign_stmt
+            assign
+              getattr
+                var
+                  name	self
+                name	all
+              const_true
+          assign_stmt
+            assign
+              getattr
+                var
+                  name	self
+                name	_clean_me
+              list
+          assign_stmt
+            assign
+              getattr
+                var
+                  name	self
+                name	_clean_trees
+              list
+          assign_stmt
+            assign
+              var
+                name	base
+              funccall
+                var
+                  name	pjoin
+                arguments
+                  string	"pandas"
+                  string	"_libs"
+                  string	"src"
+          assign_stmt
+            assign
+              var
+                name	tsbase
+              funccall
+                var
+                  name	pjoin
+                arguments
+                  string	"pandas"
+                  string	"_libs"
+                  string	"tslibs"
+                  string	"src"
+          assign_stmt
+            assign
+              var
+                name	dt
+              funccall
+                var
+                  name	pjoin
+                arguments
+                  var
+                    name	tsbase
+                  string	"datetime"
+          assign_stmt
+            assign
+              var
+                name	util
+              funccall
+                var
+                  name	pjoin
+                arguments
+                  string	"pandas"
+                  string	"util"
+          assign_stmt
+            assign
+              var
+                name	parser
+              funccall
+                var
+                  name	pjoin
+                arguments
+                  var
+                    name	base
+                  string	"parser"
+          assign_stmt
+            assign
+              var
+                name	ujson_python
+              funccall
+                var
+                  name	pjoin
+                arguments
+                  var
+                    name	base
+                  string	"ujson"
+                  string	"python"
+          assign_stmt
+            assign
+              var
+                name	ujson_lib
+              funccall
+                var
+                  name	pjoin
+                arguments
+                  var
+                    name	base
+                  string	"ujson"
+                  string	"lib"
+          assign_stmt
+            assign
+              getattr
+                var
+                  name	self
+                name	_clean_exclude
+              list
+                funccall
+                  var
+                    name	pjoin
+                  arguments
+                    var
+                      name	dt
+                    string	"np_datetime.c"
+                funccall
+                  var
+                    name	pjoin
+                  arguments
+                    var
+                      name	dt
+                    string	"np_datetime_strings.c"
+                funccall
+                  var
+                    name	pjoin
+                  arguments
+                    var
+                      name	parser
+                    string	"tokenizer.c"
+                funccall
+                  var
+                    name	pjoin
+                  arguments
+                    var
+                      name	parser
+                    string	"io.c"
+                funccall
+                  var
+                    name	pjoin
+                  arguments
+                    var
+                      name	ujson_python
+                    string	"ujson.c"
+                funccall
+                  var
+                    name	pjoin
+                  arguments
+                    var
+                      name	ujson_python
+                    string	"objToJSON.c"
+                funccall
+                  var
+                    name	pjoin
+                  arguments
+                    var
+                      name	ujson_python
+                    string	"JSONtoObj.c"
+                funccall
+                  var
+                    name	pjoin
+                  arguments
+                    var
+                      name	ujson_python
+                    string	"date_conversions.c"
+                funccall
+                  var
+                    name	pjoin
+                  arguments
+                    var
+                      name	ujson_lib
+                    string	"ultrajsonenc.c"
+                funccall
+                  var
+                    name	pjoin
+                  arguments
+                    var
+                      name	ujson_lib
+                    string	"ultrajsondec.c"
+                funccall
+                  var
+                    name	pjoin
+                  arguments
+                    var
+                      name	util
+                    string	"move.c"
+          for_stmt
+            exprlist
+              var
+                name	root
+              var
+                name	dirs
+              var
+                name	files
+            funccall
+              getattr
+                var
+                  name	os
+                name	walk
+              arguments
+                string	"pandas"
+            suite
+              for_stmt
+                var
+                  name	f
+                var
+                  name	files
+                suite
+                  assign_stmt
+                    assign
+                      var
+                        name	filepath
+                      funccall
+                        var
+                          name	pjoin
+                        arguments
+                          var
+                            name	root
+                          var
+                            name	f
+                  if_stmt
+                    comparison
+                      var
+                        name	filepath
+                      comp_op	in
+                      getattr
+                        var
+                          name	self
+                        name	_clean_exclude
+                    suite
+                      continue_stmt
+                    elifs
+                    None
+                  if_stmt
+                    comparison
+                      getitem
+                        funccall
+                          getattr
+                            getattr
+                              var
+                                name	os
+                              name	path
+                            name	splitext
+                          arguments
+                            var
+                              name	f
+                        factor
+                          -
+                          number	1
+                      comp_op	in
+                      tuple
+                        string	".pyc"
+                        string	".so"
+                        string	".o"
+                        string	".pyo"
+                        string	".pyd"
+                        string	".c"
+                        string	".cpp"
+                        string	".orig"
+                    suite
+                      expr_stmt
+                        funccall
+                          getattr
+                            getattr
+                              var
+                                name	self
+                              name	_clean_me
+                            name	append
+                          arguments
+                            var
+                              name	filepath
+                    elifs
+                    None
+                None
+              for_stmt
+                var
+                  name	d
+                var
+                  name	dirs
+                suite
+                  if_stmt
+                    comparison
+                      var
+                        name	d
+                      comp_op	==
+                      string	"__pycache__"
+                    suite
+                      expr_stmt
+                        funccall
+                          getattr
+                            getattr
+                              var
+                                name	self
+                              name	_clean_trees
+                            name	append
+                          arguments
+                            funccall
+                              var
+                                name	pjoin
+                              arguments
+                                var
+                                  name	root
+                                var
+                                  name	d
+                    elifs
+                    None
+                None
+            None
+          for_stmt
+            var
+              name	pxifile
+            var
+              name	_pxifiles
+            suite
+              assign_stmt
+                assign
+                  var
+                    name	pxifile
+                  funccall
+                    getattr
+                      var
+                        name	pxifile
+                      name	replace
+                    arguments
+                      string	".pxi.in"
+                      string	".pxi"
+              expr_stmt
+                funccall
+                  getattr
+                    getattr
+                      var
+                        name	self
+                      name	_clean_me
+                    name	append
+                  arguments
+                    var
+                      name	pxifile
+            None
+          for_stmt
+            var
+              name	d
+            tuple
+              string	"build"
+              string	"dist"
+            suite
+              if_stmt
+                funccall
+                  getattr
+                    getattr
+                      var
+                        name	os
+                      name	path
+                    name	exists
+                  arguments
+                    var
+                      name	d
+                suite
+                  expr_stmt
+                    funccall
+                      getattr
+                        getattr
+                          var
+                            name	self
+                          name	_clean_trees
+                        name	append
+                      arguments
+                        var
+                          name	d
+                elifs
+                None
+            None
+      funcdef
+        name	finalize_options
+        parameters
+          name	self
+          None
+          None
+        None
+        suite
+          pass_stmt
+      funcdef
+        name	run
+        parameters
+          name	self
+          None
+          None
+        None
+        suite
+          for_stmt
+            var
+              name	clean_me
+            getattr
+              var
+                name	self
+              name	_clean_me
+            suite
+              try_stmt
+                suite
+                  expr_stmt
+                    funccall
+                      getattr
+                        var
+                          name	os
+                        name	unlink
+                      arguments
+                        var
+                          name	clean_me
+                except_clauses
+                  except_clause
+                    var
+                      name	OSError
+                    None
+                    suite
+                      pass_stmt
+                None
+                None
+            None
+          for_stmt
+            var
+              name	clean_tree
+            getattr
+              var
+                name	self
+              name	_clean_trees
+            suite
+              try_stmt
+                suite
+                  expr_stmt
+                    funccall
+                      getattr
+                        var
+                          name	shutil
+                        name	rmtree
+                      arguments
+                        var
+                          name	clean_tree
+                except_clauses
+                  except_clause
+                    var
+                      name	OSError
+                    None
+                    suite
+                      pass_stmt
+                None
+                None
+            None
+  assign_stmt
+    assign
+      var
+        name	sdist_class
+      getitem
+        var
+          name	cmdclass
+        string	"sdist"
+  classdef
+    name	CheckSDist
+    arguments
+      var
+        name	sdist_class
+    suite
+      expr_stmt
+        string	"""Custom sdist that ensures Cython has compiled all pyx files to c."""
+      assign_stmt
+        assign
+          var
+            name	_pyxfiles
+          list
+            string	"pandas/_libs/arrays.pyx"
+            string	"pandas/_libs/lib.pyx"
+            string	"pandas/_libs/hashtable.pyx"
+            string	"pandas/_libs/tslib.pyx"
+            string	"pandas/_libs/index.pyx"
+            string	"pandas/_libs/internals.pyx"
+            string	"pandas/_libs/algos.pyx"
+            string	"pandas/_libs/join.pyx"
+            string	"pandas/_libs/indexing.pyx"
+            string	"pandas/_libs/interval.pyx"
+            string	"pandas/_libs/hashing.pyx"
+            string	"pandas/_libs/missing.pyx"
+            string	"pandas/_libs/reduction.pyx"
+            string	"pandas/_libs/testing.pyx"
+            string	"pandas/_libs/sparse.pyx"
+            string	"pandas/_libs/ops.pyx"
+            string	"pandas/_libs/parsers.pyx"
+            string	"pandas/_libs/tslibs/base.pyx"
+            string	"pandas/_libs/tslibs/ccalendar.pyx"
+            string	"pandas/_libs/tslibs/dtypes.pyx"
+            string	"pandas/_libs/tslibs/period.pyx"
+            string	"pandas/_libs/tslibs/strptime.pyx"
+            string	"pandas/_libs/tslibs/np_datetime.pyx"
+            string	"pandas/_libs/tslibs/timedeltas.pyx"
+            string	"pandas/_libs/tslibs/timestamps.pyx"
+            string	"pandas/_libs/tslibs/timezones.pyx"
+            string	"pandas/_libs/tslibs/conversion.pyx"
+            string	"pandas/_libs/tslibs/fields.pyx"
+            string	"pandas/_libs/tslibs/offsets.pyx"
+            string	"pandas/_libs/tslibs/parsing.pyx"
+            string	"pandas/_libs/tslibs/tzconversion.pyx"
+            string	"pandas/_libs/tslibs/vectorized.pyx"
+            string	"pandas/_libs/window/indexers.pyx"
+            string	"pandas/_libs/writers.pyx"
+            string	"pandas/io/sas/sas.pyx"
+      assign_stmt
+        assign
+          var
+            name	_cpp_pyxfiles
+          list
+            string	"pandas/_libs/window/aggregations.pyx"
+      funcdef
+        name	initialize_options
+        parameters
+          name	self
+          None
+          None
+        None
+        suite
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	sdist_class
+                name	initialize_options
+              arguments
+                var
+                  name	self
+      funcdef
+        name	run
+        parameters
+          name	self
+          None
+          None
+        None
+        suite
+          if_stmt
+            comparison
+              string	"cython"
+              comp_op	in
+              var
+                name	cmdclass
+            suite
+              expr_stmt
+                funccall
+                  getattr
+                    var
+                      name	self
+                    name	run_command
+                  arguments
+                    string	"cython"
+            elifs
+            suite
+              assign_stmt
+                assign
+                  var
+                    name	pyx_files
+                  list
+                    tuple
+                      getattr
+                        var
+                          name	self
+                        name	_pyxfiles
+                      string	"c"
+                    tuple
+                      getattr
+                        var
+                          name	self
+                        name	_cpp_pyxfiles
+                      string	"cpp"
+              for_stmt
+                exprlist
+                  var
+                    name	pyxfiles
+                  var
+                    name	extension
+                var
+                  name	pyx_files
+                suite
+                  for_stmt
+                    var
+                      name	pyxfile
+                    var
+                      name	pyxfiles
+                    suite
+                      assign_stmt
+                        assign
+                          var
+                            name	sourcefile
+                          arith_expr
+                            getitem
+                              var
+                                name	pyxfile
+                              slice
+                                None
+                                factor
+                                  -
+                                  number	3
+                                None
+                            +
+                            var
+                              name	extension
+                      assign_stmt
+                        assign
+                          var
+                            name	msg
+                          string_concat
+                            string	f"{extension}-source file '{sourcefile}' not found.\n"
+                            string	"Run 'setup.py cython' before sdist."
+                      assert_stmt
+                        funccall
+                          getattr
+                            getattr
+                              var
+                                name	os
+                              name	path
+                            name	isfile
+                          arguments
+                            var
+                              name	sourcefile
+                        var
+                          name	msg
+                    None
+                None
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	sdist_class
+                name	run
+              arguments
+                var
+                  name	self
+  classdef
+    name	CheckingBuildExt
+    arguments
+      var
+        name	build_ext
+    suite
+      expr_stmt
+        string	"""
+    Subclass build_ext to get clearer report if Cython is necessary.
+    """
+      funcdef
+        name	check_cython_extensions
+        parameters
+          name	self
+          name	extensions
+          None
+          None
+        None
+        suite
+          for_stmt
+            var
+              name	ext
+            var
+              name	extensions
+            suite
+              for_stmt
+                var
+                  name	src
+                getattr
+                  var
+                    name	ext
+                  name	sources
+                suite
+                  if_stmt
+                    not_test
+                      funccall
+                        getattr
+                          getattr
+                            var
+                              name	os
+                            name	path
+                          name	exists
+                        arguments
+                          var
+                            name	src
+                    suite
+                      expr_stmt
+                        funccall
+                          var
+                            name	print
+                          arguments
+                            string	f"{ext.name}: -> [{ext.sources}]"
+                      raise_stmt
+                        funccall
+                          var
+                            name	Exception
+                          arguments
+                            string	f"""Cython-generated file '{src}' not found.
+                Cython is required to compile pandas from a development branch.
+                Please install Cython or download a release package of pandas.
+                """
+                        None
+                    elifs
+                    None
+                None
+            None
+      funcdef
+        name	build_extensions
+        parameters
+          name	self
+          None
+          None
+        None
+        suite
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	self
+                name	check_cython_extensions
+              arguments
+                getattr
+                  var
+                    name	self
+                  name	extensions
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	build_ext
+                name	build_extensions
+              arguments
+                var
+                  name	self
+  classdef
+    name	CythonCommand
+    arguments
+      var
+        name	build_ext
+    suite
+      expr_stmt
+        string	"""
+    Custom command subclassed from Cython.Distutils.build_ext
+    to compile pyx->c, and stop there. All this does is override the
+    C-compile method build_extension() with a no-op.
+    """
+      funcdef
+        name	build_extension
+        parameters
+          name	self
+          name	ext
+          None
+          None
+        None
+        suite
+          pass_stmt
+  classdef
+    name	DummyBuildSrc
+    arguments
+      var
+        name	Command
+    suite
+      expr_stmt
+        string	"""numpy's build_src command interferes with Cython's build_ext."""
+      assign_stmt
+        assign
+          var
+            name	user_options
+          list
+      funcdef
+        name	initialize_options
+        parameters
+          name	self
+          None
+          None
+        None
+        suite
+          assign_stmt
+            assign
+              getattr
+                var
+                  name	self
+                name	py_modules_dict
+              dict
+      funcdef
+        name	finalize_options
+        parameters
+          name	self
+          None
+          None
+        None
+        suite
+          pass_stmt
+      funcdef
+        name	run
+        parameters
+          name	self
+          None
+          None
+        None
+        suite
+          pass_stmt
+  assign_stmt
+    assign
+      getitem
+        var
+          name	cmdclass
+        string	"clean"
+      var
+        name	CleanCommand
+  assign_stmt
+    assign
+      getitem
+        var
+          name	cmdclass
+        string	"build_ext"
+      var
+        name	CheckingBuildExt
+  if_stmt
+    var
+      name	_CYTHON_INSTALLED
+    suite
+      assign_stmt
+        assign
+          var
+            name	suffix
+          string	".pyx"
+      assign_stmt
+        assign
+          getitem
+            var
+              name	cmdclass
+            string	"cython"
+          var
+            name	CythonCommand
+    elifs
+    suite
+      assign_stmt
+        assign
+          var
+            name	suffix
+          string	".c"
+      assign_stmt
+        assign
+          getitem
+            var
+              name	cmdclass
+            string	"build_src"
+          var
+            name	DummyBuildSrc
+  assign_stmt
+    assign
+      var
+        name	debugging_symbols_requested
+      comparison
+        string	"--with-debugging-symbols"
+        comp_op	in
+        getattr
+          var
+            name	sys
+          name	argv
+  if_stmt
+    var
+      name	debugging_symbols_requested
+    suite
+      expr_stmt
+        funccall
+          getattr
+            getattr
+              var
+                name	sys
+              name	argv
+            name	remove
+          arguments
+            string	"--with-debugging-symbols"
+    elifs
+    None
+  if_stmt
+    comparison
+      getattr
+        var
+          name	sys
+        name	byteorder
+      comp_op	==
+      string	"big"
+    suite
+      assign_stmt
+        assign
+          var
+            name	endian_macro
+          list
+            tuple
+              string	"__BIG_ENDIAN__"
+              string	"1"
+    elifs
+    suite
+      assign_stmt
+        assign
+          var
+            name	endian_macro
+          list
+            tuple
+              string	"__LITTLE_ENDIAN__"
+              string	"1"
+  assign_stmt
+    assign
+      var
+        name	extra_compile_args
+      list
+  assign_stmt
+    assign
+      var
+        name	extra_link_args
+      list
+  if_stmt
+    funccall
+      var
+        name	is_platform_windows
+      None
+    suite
+      if_stmt
+        var
+          name	debugging_symbols_requested
+        suite
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	extra_compile_args
+                name	append
+              arguments
+                string	"/Z7"
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	extra_link_args
+                name	append
+              arguments
+                string	"/DEBUG"
+        elifs
+        None
+    elifs
+    suite
+      if_stmt
+        comparison
+          funccall
+            getattr
+              getattr
+                var
+                  name	os
+                name	environ
+              name	get
+            arguments
+              string	"PANDAS_CI"
+              string	"0"
+          comp_op	==
+          string	"1"
+        suite
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	extra_compile_args
+                name	append
+              arguments
+                string	"-Werror"
+        elifs
+        None
+      if_stmt
+        var
+          name	debugging_symbols_requested
+        suite
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	extra_compile_args
+                name	append
+              arguments
+                string	"-g"
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	extra_compile_args
+                name	append
+              arguments
+                string	"-UNDEBUG"
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	extra_compile_args
+                name	append
+              arguments
+                string	"-O0"
+        elifs
+        None
+  if_stmt
+    funccall
+      var
+        name	is_platform_mac
+      None
+    suite
+      if_stmt
+        comparison
+          string	"MACOSX_DEPLOYMENT_TARGET"
+          comp_op
+            not
+            in
+          getattr
+            var
+              name	os
+            name	environ
+        suite
+          assign_stmt
+            assign
+              var
+                name	current_system
+              getitem
+                funccall
+                  getattr
+                    var
+                      name	platform
+                    name	mac_ver
+                  None
+                number	0
+          assign_stmt
+            assign
+              var
+                name	python_target
+              funccall
+                getattr
+                  funccall
+                    var
+                      name	get_config_vars
+                    None
+                  name	get
+                arguments
+                  string	"MACOSX_DEPLOYMENT_TARGET"
+                  var
+                    name	current_system
+          assign_stmt
+            assign
+              var
+                name	target_macos_version
+              string	"10.9"
+          assign_stmt
+            assign
+              var
+                name	parsed_macos_version
+              funccall
+                var
+                  name	parse_version
+                arguments
+                  var
+                    name	target_macos_version
+          if_stmt
+            and_test
+              comparison
+                funccall
+                  var
+                    name	parse_version
+                  arguments
+                    funccall
+                      var
+                        name	str
+                      arguments
+                        var
+                          name	python_target
+                comp_op	<
+                var
+                  name	parsed_macos_version
+              comparison
+                funccall
+                  var
+                    name	parse_version
+                  arguments
+                    var
+                      name	current_system
+                comp_op	>=
+                var
+                  name	parsed_macos_version
+            suite
+              assign_stmt
+                assign
+                  getitem
+                    getattr
+                      var
+                        name	os
+                      name	environ
+                    string	"MACOSX_DEPLOYMENT_TARGET"
+                  var
+                    name	target_macos_version
+            elifs
+            None
+        elifs
+        None
+      if_stmt
+        comparison
+          getitem
+            getattr
+              var
+                name	sys
+              name	version_info
+            slice
+              None
+              number	2
+              None
+          comp_op	==
+          tuple
+            number	3
+            number	8
+        suite
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	extra_compile_args
+                name	append
+              arguments
+                string	"-Wno-error=deprecated-declarations"
+        elifs
+        None
+      expr_stmt
+        funccall
+          getattr
+            var
+              name	extra_compile_args
+            name	append
+          arguments
+            string	"-Wno-error=unreachable-code"
+    elifs
+    None
+  assign_stmt
+    assign
+      var
+        name	linetrace
+      funccall
+        getattr
+          getattr
+            var
+              name	os
+            name	environ
+          name	get
+        arguments
+          string	"PANDAS_CYTHON_COVERAGE"
+          const_false
+  if_stmt
+    comparison
+      string	"--with-cython-coverage"
+      comp_op	in
+      getattr
+        var
+          name	sys
+        name	argv
+    suite
+      assign_stmt
+        assign
+          var
+            name	linetrace
+          const_true
+      expr_stmt
+        funccall
+          getattr
+            getattr
+              var
+                name	sys
+              name	argv
+            name	remove
+          arguments
+            string	"--with-cython-coverage"
+    elifs
+    None
+  assign_stmt
+    assign
+      var
+        name	directives
+      dict
+        key_value
+          string	"linetrace"
+          const_false
+        key_value
+          string	"language_level"
+          number	3
+  assign_stmt
+    assign
+      var
+        name	macros
+      list
+  if_stmt
+    var
+      name	linetrace
+    suite
+      assign_stmt
+        assign
+          getitem
+            var
+              name	directives
+            string	"linetrace"
+          const_true
+      assign_stmt
+        assign
+          var
+            name	macros
+          list
+            tuple
+              string	"CYTHON_TRACE"
+              string	"1"
+            tuple
+              string	"CYTHON_TRACE_NOGIL"
+              string	"1"
+    elifs
+    None
+  expr_stmt
+    funccall
+      getattr
+        var
+          name	macros
+        name	append
+      arguments
+        tuple
+          string	"NPY_NO_DEPRECATED_API"
+          string	"0"
+  funcdef
+    name	maybe_cythonize
+    parameters
+      name	extensions
+      None
+      starparams
+        starparam
+          name	args
+        poststarparams
+          kwparams
+            name	kwargs
+    None
+    suite
+      expr_stmt
+        string	"""
+    Render tempita templates before calling cythonize. This is skipped for
+
+    * clean
+    * sdist
+    """
+      if_stmt
+        or_test
+          comparison
+            string	"clean"
+            comp_op	in
+            getattr
+              var
+                name	sys
+              name	argv
+          comparison
+            string	"sdist"
+            comp_op	in
+            getattr
+              var
+                name	sys
+              name	argv
+        suite
+          return_stmt
+            var
+              name	extensions
+        elifs
+          elif_
+            not_test
+              var
+                name	_CYTHON_INSTALLED
+            suite
+              if_stmt
+                var
+                  name	_CYTHON_VERSION
+                suite
+                  raise_stmt
+                    funccall
+                      var
+                        name	RuntimeError
+                      arguments
+                        string_concat
+                          string	f"Cannot cythonize with old Cython version ({_CYTHON_VERSION} "
+                          string	f"installed, needs {min_cython_ver})"
+                    None
+                elifs
+                None
+              raise_stmt
+                funccall
+                  var
+                    name	RuntimeError
+                  arguments
+                    string	"Cannot cythonize without Cython installed."
+                None
+        None
+      assign_stmt
+        assign
+          var
+            name	parser
+          funccall
+            getattr
+              var
+                name	argparse
+              name	ArgumentParser
+            None
+      expr_stmt
+        funccall
+          getattr
+            var
+              name	parser
+            name	add_argument
+          arguments
+            string	"--parallel"
+            string	"-j"
+            argvalue
+              var
+                name	type
+              var
+                name	int
+            argvalue
+              var
+                name	default
+              number	1
+      assign_stmt
+        assign
+          tuple
+            var
+              name	parsed
+            var
+              name	_
+          funccall
+            getattr
+              var
+                name	parser
+              name	parse_known_args
+            None
+      assign_stmt
+        assign
+          getitem
+            var
+              name	kwargs
+            string	"nthreads"
+          getattr
+            var
+              name	parsed
+            name	parallel
+      expr_stmt
+        funccall
+          getattr
+            var
+              name	build_ext
+            name	render_templates
+          arguments
+            var
+              name	_pxifiles
+      return_stmt
+        funccall
+          var
+            name	cythonize
+          arguments
+            var
+              name	extensions
+            starargs
+              stararg
+                var
+                  name	args
+              kwargs
+                var
+                  name	kwargs
+  funcdef
+    name	srcpath
+    parameters
+      paramvalue
+        name	name
+        const_none
+      paramvalue
+        name	suffix
+        string	".pyx"
+      paramvalue
+        name	subdir
+        string	"src"
+      None
+      None
+    None
+    suite
+      return_stmt
+        funccall
+          var
+            name	pjoin
+          arguments
+            string	"pandas"
+            var
+              name	subdir
+            arith_expr
+              var
+                name	name
+              +
+              var
+                name	suffix
+  assign_stmt
+    assign
+      var
+        name	lib_depends
+      list
+        string	"pandas/_libs/src/parse_helper.h"
+  assign_stmt
+    assign
+      var
+        name	klib_include
+      list
+        string	"pandas/_libs/src/klib"
+  assign_stmt
+    assign
+      var
+        name	tseries_depends
+      list
+        string	"pandas/_libs/tslibs/src/datetime/np_datetime.h"
+        string	"pandas/_libs/tslibs/src/datetime/np_datetime_strings.h"
+  assign_stmt
+    assign
+      var
+        name	ext_data
+      dict
+        key_value
+          string	"_libs.algos"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/algos"
+            key_value
+              string	"include"
+              var
+                name	klib_include
+            key_value
+              string	"depends"
+              getitem
+                var
+                  name	_pxi_dep
+                string	"algos"
+        key_value
+          string	"_libs.arrays"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/arrays"
+        key_value
+          string	"_libs.groupby"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/groupby"
+        key_value
+          string	"_libs.hashing"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/hashing"
+            key_value
+              string	"depends"
+              list
+        key_value
+          string	"_libs.hashtable"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/hashtable"
+            key_value
+              string	"include"
+              var
+                name	klib_include
+            key_value
+              string	"depends"
+              arith_expr
+                list
+                  string	"pandas/_libs/src/klib/khash_python.h"
+                  string	"pandas/_libs/src/klib/khash.h"
+                +
+                getitem
+                  var
+                    name	_pxi_dep
+                  string	"hashtable"
+        key_value
+          string	"_libs.index"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/index"
+            key_value
+              string	"include"
+              var
+                name	klib_include
+            key_value
+              string	"depends"
+              getitem
+                var
+                  name	_pxi_dep
+                string	"index"
+        key_value
+          string	"_libs.indexing"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/indexing"
+        key_value
+          string	"_libs.internals"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/internals"
+        key_value
+          string	"_libs.interval"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/interval"
+            key_value
+              string	"include"
+              var
+                name	klib_include
+            key_value
+              string	"depends"
+              getitem
+                var
+                  name	_pxi_dep
+                string	"interval"
+        key_value
+          string	"_libs.join"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/join"
+            key_value
+              string	"include"
+              var
+                name	klib_include
+        key_value
+          string	"_libs.lib"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/lib"
+            key_value
+              string	"depends"
+              arith_expr
+                var
+                  name	lib_depends
+                +
+                var
+                  name	tseries_depends
+            key_value
+              string	"include"
+              var
+                name	klib_include
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/src/parser/tokenizer.c"
+        key_value
+          string	"_libs.missing"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/missing"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+        key_value
+          string	"_libs.parsers"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/parsers"
+            key_value
+              string	"include"
+              arith_expr
+                var
+                  name	klib_include
+                +
+                list
+                  string	"pandas/_libs/src"
+            key_value
+              string	"depends"
+              list
+                string	"pandas/_libs/src/parser/tokenizer.h"
+                string	"pandas/_libs/src/parser/io.h"
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/src/parser/tokenizer.c"
+                string	"pandas/_libs/src/parser/io.c"
+        key_value
+          string	"_libs.reduction"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/reduction"
+        key_value
+          string	"_libs.ops"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/ops"
+        key_value
+          string	"_libs.ops_dispatch"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/ops_dispatch"
+        key_value
+          string	"_libs.properties"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/properties"
+        key_value
+          string	"_libs.reshape"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/reshape"
+            key_value
+              string	"depends"
+              list
+        key_value
+          string	"_libs.sparse"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/sparse"
+            key_value
+              string	"depends"
+              getitem
+                var
+                  name	_pxi_dep
+                string	"sparse"
+        key_value
+          string	"_libs.tslib"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslib"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime.c"
+        key_value
+          string	"_libs.tslibs.base"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/base"
+        key_value
+          string	"_libs.tslibs.ccalendar"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/ccalendar"
+        key_value
+          string	"_libs.tslibs.dtypes"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/dtypes"
+        key_value
+          string	"_libs.tslibs.conversion"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/conversion"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime.c"
+        key_value
+          string	"_libs.tslibs.fields"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/fields"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime.c"
+        key_value
+          string	"_libs.tslibs.nattype"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/nattype"
+        key_value
+          string	"_libs.tslibs.np_datetime"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/np_datetime"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime.c"
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime_strings.c"
+        key_value
+          string	"_libs.tslibs.offsets"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/offsets"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime.c"
+        key_value
+          string	"_libs.tslibs.parsing"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/parsing"
+            key_value
+              string	"include"
+              var
+                name	klib_include
+            key_value
+              string	"depends"
+              list
+                string	"pandas/_libs/src/parser/tokenizer.h"
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/src/parser/tokenizer.c"
+        key_value
+          string	"_libs.tslibs.period"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/period"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime.c"
+        key_value
+          string	"_libs.tslibs.strptime"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/strptime"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+        key_value
+          string	"_libs.tslibs.timedeltas"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/timedeltas"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime.c"
+        key_value
+          string	"_libs.tslibs.timestamps"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/timestamps"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime.c"
+        key_value
+          string	"_libs.tslibs.timezones"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/timezones"
+        key_value
+          string	"_libs.tslibs.tzconversion"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/tzconversion"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime.c"
+        key_value
+          string	"_libs.tslibs.vectorized"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/tslibs/vectorized"
+            key_value
+              string	"depends"
+              var
+                name	tseries_depends
+            key_value
+              string	"sources"
+              list
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime.c"
+        key_value
+          string	"_libs.testing"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/testing"
+        key_value
+          string	"_libs.window.aggregations"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/window/aggregations"
+            key_value
+              string	"language"
+              string	"c++"
+            key_value
+              string	"suffix"
+              string	".cpp"
+            key_value
+              string	"depends"
+              list
+                string	"pandas/_libs/src/skiplist.h"
+        key_value
+          string	"_libs.window.indexers"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/window/indexers"
+        key_value
+          string	"_libs.writers"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"_libs/writers"
+        key_value
+          string	"io.sas._sas"
+          dict
+            key_value
+              string	"pyxfile"
+              string	"io/sas/sas"
+  assign_stmt
+    assign
+      var
+        name	extensions
+      list
+  for_stmt
+    exprlist
+      var
+        name	name
+      var
+        name	data
+    funccall
+      getattr
+        var
+          name	ext_data
+        name	items
+      None
+    suite
+      assign_stmt
+        assign
+          var
+            name	source_suffix
+          test
+            var
+              name	suffix
+            comparison
+              var
+                name	suffix
+              comp_op	==
+              string	".pyx"
+            funccall
+              getattr
+                var
+                  name	data
+                name	get
+              arguments
+                string	"suffix"
+                string	".c"
+      assign_stmt
+        assign
+          var
+            name	sources
+          list
+            funccall
+              var
+                name	srcpath
+              arguments
+                getitem
+                  var
+                    name	data
+                  string	"pyxfile"
+                argvalue
+                  var
+                    name	suffix
+                  var
+                    name	source_suffix
+                argvalue
+                  var
+                    name	subdir
+                  string	""
+      expr_stmt
+        funccall
+          getattr
+            var
+              name	sources
+            name	extend
+          arguments
+            funccall
+              getattr
+                var
+                  name	data
+                name	get
+              arguments
+                string	"sources"
+                list
+      assign_stmt
+        assign
+          var
+            name	include
+          funccall
+            getattr
+              var
+                name	data
+              name	get
+            arguments
+              string	"include"
+              list
+      expr_stmt
+        funccall
+          getattr
+            var
+              name	include
+            name	append
+          arguments
+            funccall
+              getattr
+                var
+                  name	numpy
+                name	get_include
+              None
+      assign_stmt
+        assign
+          var
+            name	undef_macros
+          list
+      if_stmt
+        and_test
+          comparison
+            getattr
+              var
+                name	sys
+              name	platform
+            comp_op	==
+            string	"zos"
+          comparison
+            funccall
+              getattr
+                var
+                  name	data
+                name	get
+              arguments
+                string	"language"
+            comp_op	==
+            string	"c++"
+          comparison
+            funccall
+              getattr
+                getattr
+                  var
+                    name	os
+                  name	path
+                name	basename
+              arguments
+                funccall
+                  getattr
+                    getattr
+                      var
+                        name	os
+                      name	environ
+                    name	get
+                  arguments
+                    string	"CXX"
+                    string	"/bin/xlc++"
+            comp_op	in
+            tuple
+              string	"xlc"
+              string	"xlc++"
+        suite
+          expr_stmt
+            funccall
+              getattr
+                funccall
+                  getattr
+                    var
+                      name	data
+                    name	get
+                  arguments
+                    string	"macros"
+                    var
+                      name	macros
+                name	append
+              arguments
+                tuple
+                  string	"__s390__"
+                  string	"1"
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	extra_compile_args
+                name	append
+              arguments
+                string	"-qlanglvl=extended0x:nolibext"
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	undef_macros
+                name	append
+              arguments
+                string	"_POSIX_THREADS"
+        elifs
+        None
+      assign_stmt
+        assign
+          var
+            name	obj
+          funccall
+            var
+              name	Extension
+            arguments
+              string	f"pandas.{name}"
+              argvalue
+                var
+                  name	sources
+                var
+                  name	sources
+              argvalue
+                var
+                  name	depends
+                funccall
+                  getattr
+                    var
+                      name	data
+                    name	get
+                  arguments
+                    string	"depends"
+                    list
+              argvalue
+                var
+                  name	include_dirs
+                var
+                  name	include
+              argvalue
+                var
+                  name	language
+                funccall
+                  getattr
+                    var
+                      name	data
+                    name	get
+                  arguments
+                    string	"language"
+                    string	"c"
+              argvalue
+                var
+                  name	define_macros
+                funccall
+                  getattr
+                    var
+                      name	data
+                    name	get
+                  arguments
+                    string	"macros"
+                    var
+                      name	macros
+              argvalue
+                var
+                  name	extra_compile_args
+                var
+                  name	extra_compile_args
+              argvalue
+                var
+                  name	extra_link_args
+                var
+                  name	extra_link_args
+              argvalue
+                var
+                  name	undef_macros
+                var
+                  name	undef_macros
+              None
+      expr_stmt
+        funccall
+          getattr
+            var
+              name	extensions
+            name	append
+          arguments
+            var
+              name	obj
+    None
+  if_stmt
+    comparison
+      var
+        name	suffix
+      comp_op	==
+      string	".pyx"
+    suite
+      for_stmt
+        var
+          name	ext
+        var
+          name	extensions
+        suite
+          if_stmt
+            funccall
+              getattr
+                getitem
+                  getattr
+                    var
+                      name	ext
+                    name	sources
+                  number	0
+                name	endswith
+              arguments
+                tuple
+                  string	".c"
+                  string	".cpp"
+            suite
+              assign_stmt
+                assign
+                  tuple
+                    var
+                      name	root
+                    var
+                      name	_
+                  funccall
+                    getattr
+                      getattr
+                        var
+                          name	os
+                        name	path
+                      name	splitext
+                    arguments
+                      getitem
+                        getattr
+                          var
+                            name	ext
+                          name	sources
+                        number	0
+              assign_stmt
+                assign
+                  getitem
+                    getattr
+                      var
+                        name	ext
+                      name	sources
+                    number	0
+                  arith_expr
+                    var
+                      name	root
+                    +
+                    var
+                      name	suffix
+            elifs
+            None
+        None
+    elifs
+    None
+  assign_stmt
+    assign
+      var
+        name	ujson_ext
+      funccall
+        var
+          name	Extension
+        arguments
+          string	"pandas._libs.json"
+          argvalue
+            var
+              name	depends
+            list
+              string	"pandas/_libs/src/ujson/lib/ultrajson.h"
+              string	"pandas/_libs/src/ujson/python/date_conversions.h"
+          argvalue
+            var
+              name	sources
+            arith_expr
+              list
+                string	"pandas/_libs/src/ujson/python/ujson.c"
+                string	"pandas/_libs/src/ujson/python/objToJSON.c"
+                string	"pandas/_libs/src/ujson/python/date_conversions.c"
+                string	"pandas/_libs/src/ujson/python/JSONtoObj.c"
+                string	"pandas/_libs/src/ujson/lib/ultrajsonenc.c"
+                string	"pandas/_libs/src/ujson/lib/ultrajsondec.c"
+              +
+              list
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime.c"
+                string	"pandas/_libs/tslibs/src/datetime/np_datetime_strings.c"
+          argvalue
+            var
+              name	include_dirs
+            list
+              string	"pandas/_libs/src/ujson/python"
+              string	"pandas/_libs/src/ujson/lib"
+              string	"pandas/_libs/src/datetime"
+              funccall
+                getattr
+                  var
+                    name	numpy
+                  name	get_include
+                None
+          argvalue
+            var
+              name	extra_compile_args
+            arith_expr
+              list
+                string	"-D_GNU_SOURCE"
+              +
+              var
+                name	extra_compile_args
+          argvalue
+            var
+              name	extra_link_args
+            var
+              name	extra_link_args
+          argvalue
+            var
+              name	define_macros
+            var
+              name	macros
+          None
+  expr_stmt
+    funccall
+      getattr
+        var
+          name	extensions
+        name	append
+      arguments
+        var
+          name	ujson_ext
+  if_stmt
+    comparison
+      var
+        name	__name__
+      comp_op	==
+      string	"__main__"
+    suite
+      expr_stmt
+        funccall
+          getattr
+            var
+              name	multiprocessing
+            name	freeze_support
+          None
+      expr_stmt
+        funccall
+          var
+            name	setup
+          arguments
+            argvalue
+              var
+                name	version
+              funccall
+                getattr
+                  var
+                    name	versioneer
+                  name	get_version
+                None
+            argvalue
+              var
+                name	ext_modules
+              funccall
+                var
+                  name	maybe_cythonize
+                arguments
+                  var
+                    name	extensions
+                  argvalue
+                    var
+                      name	compiler_directives
+                    var
+                      name	directives
+            argvalue
+              var
+                name	cmdclass
+              var
+                name	cmdclass
+            None
+    elifs
+    None

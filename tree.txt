@@ -1,0 +1,680 @@
+file_input
+  import_stmt
+    import_from
+      dotted_name
+        name	test
+      import_as_names
+        import_as_name
+          name	sum
+          None
+  import_stmt
+    import_from
+      dotted_name
+        name	s
+      import_as_names
+        import_as_name
+          name	f
+          None
+  assign_stmt
+    assign
+      tuple
+        var
+          name	x
+        var
+          name	y
+      tuple
+        funccall
+          var
+            name	input
+          None
+        funccall
+          var
+            name	input
+          None
+  assign_stmt
+    assign
+      var
+        name	b
+      number	5
+  assign_stmt
+    assign
+      var
+        name	c
+      funccall
+        var
+          name	sum
+        arguments
+          var
+            name	a
+          var
+            name	b
+  with_stmt
+    with_items
+      with_item
+        funccall
+          var
+            name	open
+          arguments
+            string	'filename.py'
+            string	'r'
+        name	file
+    suite
+      assign_stmt
+        assign
+          var
+            name	str_file
+          funccall
+            getattr
+              var
+                name	file
+              name	read
+            None
+  if_stmt
+    comparison
+      var
+        name	c
+      comp_op	<
+      number	5
+    suite
+      assign_stmt
+        assign
+          var
+            name	a
+          var
+            name	b
+    elifs
+      elif_
+        comparison
+          var
+            name	s
+          comp_op	==
+          number	3
+        suite
+          if_stmt
+            comparison
+              var
+                name	x
+              comp_op	==
+              const_true
+            suite
+              expr_stmt
+                funccall
+                  var
+                    name	print
+                  arguments
+                    var
+                      name	c
+            elifs
+            suite
+              assign_stmt
+                assign
+                  var
+                    name	y
+                  var
+                    name	y
+          expr_stmt
+            funccall
+              var
+                name	print
+              arguments
+                string	"b"
+    suite
+      expr_stmt
+        funccall
+          var
+            name	print
+          arguments
+            number	1
+      assign_stmt
+        assign
+          var
+            name	p
+          number	3
+  assign_stmt
+    augassign
+      var
+        name	a
+      augassign_op	+=
+      number	16
+	  
+from test import sum
+from s import f
+x, y = input(),  input()
+b = 5
+c = sum(a,b)
+with open('filename.py', 'r') as file:
+    str_file = file.read()
+if c < 5:
+    a = b
+elif s == 3:
+    if x == True:
+        print(c)
+    else:
+        y = y
+    print("b")
+else:
+    print(1)
+    p = 3
+a+=16
+
+
+
+file_input
+  import_stmt
+    import_from
+      dotted_name
+        name	test
+      import_as_names
+        import_as_name
+          name	sum
+          None
+  import_stmt
+    import_from
+      dotted_name
+        name	s
+      import_as_names
+        import_as_name
+          name	f
+          None
+  assign_stmt
+    assign
+      tuple
+        var
+          name	x
+        var
+          name	y
+      tuple
+        funccall
+          var
+            name	input
+          None
+        funccall
+          var
+            name	input
+          None
+  assign_stmt
+    assign
+      var
+        name	b
+      number	5
+  assign_stmt
+    assign
+      var
+        name	c
+      funccall
+        var
+          name	sum
+        arguments
+          var
+            name	a
+          var
+            name	b
+  with_stmt
+    with_items
+      with_item
+        funccall
+          var
+            name	open
+          arguments
+            string	'filename.py'
+            string	'r'
+        name	file
+    suite
+      assign_stmt
+        assign
+          var
+            name	str_file
+          funccall
+            getattr
+              var
+                name	file
+              name	read
+            None
+  if_stmt
+    comparison
+      var
+        name	c
+      comp_op	<
+      number	5
+    suite
+      assign_stmt
+        assign
+          var
+            name	a
+          var
+            name	b
+    elifs
+      elif_
+        comparison
+          var
+            name	s
+          comp_op	==
+          number	3
+        suite
+          if_stmt
+            comparison
+              var
+                name	x
+              comp_op	==
+              const_true
+            suite
+              expr_stmt
+                funccall
+                  var
+                    name	print
+                  arguments
+                    var
+                      name	c
+            elifs
+            None
+          for_stmt
+            var
+              name	i
+            var
+              name	arr
+            suite
+              expr_stmt
+                funccall
+                  var
+                    name	print
+                  arguments
+                    var
+                      name	i
+            None
+          expr_stmt
+            funccall
+              var
+                name	print
+              arguments
+                string	"b"
+    suite
+      expr_stmt
+        funccall
+          var
+            name	print
+          arguments
+            number	1
+      assign_stmt
+        assign
+          var
+            name	p
+          number	3
+  assign_stmt
+    augassign
+      var
+        name	a
+      augassign_op	+=
+      number	16
+	  
+	  
+from test import sum
+from s import f
+x, y = input(),  input()
+b = 5
+c = sum(a,b)
+with open('filename.py', 'r') as file:
+    str_file = file.read()
+if c < 5:
+    a = b
+    for i in arr:
+        print(i)
+a+=16
+
+print('Merhaba Dünya')
+for i in range(5,3):
+    print(i)
+else:
+    print('Hello World')
+	
+	
+Dildeki eksikler(while)
+Diyagram sembolleri
+
+
+file_input
+  import_stmt
+    import_from
+      dotted_name
+        name	testfile2
+      import_as_names
+        import_as_name
+          name	sum
+          None
+  assign_stmt
+    assign
+      var
+        name	x
+      funccall
+        var
+          name	sum
+        arguments
+          number	1
+          number	2
+  assign_stmt
+    assign
+      var
+        name	a
+      var
+        name	b
+
+from testfile2 import sum
+from s import f
+def sum(n, n2):
+    x = a+b
+x, y = input(),  input()
+b = 5
+c = sum(a,b)
+with open('filename.py', 'r') as file:
+    str_file = file.read()
+if c < 5:
+    a = b
+elif a == 1:
+    for i in arr:
+        print(i)
+    print(2)
+else:
+    print(1)
+a+=16
+
+
+file_input
+  import_stmt
+    import_from
+      dotted_name
+        name	s
+      import_as_names
+        import_as_name
+          name	f
+          None
+  funcdef
+    name	sum
+    parameters
+      name	n
+      name	n2
+      None
+      None
+    None
+    suite
+      assign_stmt
+        assign
+          var
+            name	x
+          arith_expr
+            var
+              name	n
+            +
+            var
+              name	n2
+      if_stmt
+        comparison
+          var
+            name	x
+          comp_op	>
+          number	5
+        suite
+          expr_stmt
+            funccall
+              var
+                name	print
+              arguments
+                string	'x greater than 5'
+        elifs
+          elif_
+            comparison
+              var
+                name	x
+              comp_op	<
+              number	5
+            suite
+              assign_stmt
+                augassign
+                  var
+                    name	x
+                  augassign_op	+=
+                  number	5
+        suite
+          expr_stmt
+            funccall
+              var
+                name	print
+              arguments
+                string	'invalid'
+  assign_stmt
+    assign
+      tuple
+        var
+          name	x
+        var
+          name	y
+      tuple
+        funccall
+          var
+            name	input
+          None
+        funccall
+          var
+            name	input
+          None
+  assign_stmt
+    assign
+      var
+        name	b
+      number	5
+  assign_stmt
+    assign
+      var
+        name	c
+      funccall
+        var
+          name	sum
+        arguments
+          var
+            name	a
+          var
+            name	b
+  with_stmt
+    with_items
+      with_item
+        funccall
+          var
+            name	open
+          arguments
+            string	'filename.py'
+            string	'r'
+        name	file
+    suite
+      assign_stmt
+        assign
+          var
+            name	str_file
+          funccall
+            getattr
+              var
+                name	file
+              name	read
+            None
+  if_stmt
+    comparison
+      var
+        name	c
+      comp_op	<
+      number	5
+    suite
+      assign_stmt
+        assign
+          var
+            name	a
+          var
+            name	b
+    elifs
+      elif_
+        comparison
+          var
+            name	a
+          comp_op	==
+          number	1
+        suite
+          for_stmt
+            var
+              name	i
+            var
+              name	arr
+            suite
+              expr_stmt
+                funccall
+                  var
+                    name	print
+                  arguments
+                    var
+                      name	i
+            None
+          expr_stmt
+            funccall
+              var
+                name	print
+              arguments
+                number	2
+    suite
+      expr_stmt
+        funccall
+          var
+            name	print
+          arguments
+            number	1
+  assign_stmt
+    augassign
+      var
+        name	a
+      augassign_op	+=
+      number	16
+elif x < 5:
+
+
+elif a == 1:
+elif true
+expr2
+127.0.0.1 - - [23/Aug/2022 10:43:53] "POST / HTTP/1.1" 200 -
+
+
+
+file_input
+  import_stmt
+    import_from
+      dotted_name
+        name	testfile2
+      import_as_names
+        import_as_name
+          name	sum
+          None
+  assign_stmt
+    assign
+      var
+        name	x
+      funccall
+        var
+          name	sum
+        arguments
+          number	1
+          number	2
+  assign_stmt
+    assign
+      var
+        name	x
+      number	20
+  classdef
+    name	CheckingBuildExt
+    arguments
+      var
+        name	build_ext
+    suite
+      expr_stmt
+        string	"""
+    Subclass build_ext to get clearer report if Cython is necessary.
+    """
+      funcdef
+        name	check_cython_extensions
+        parameters
+          name	self
+          name	extensions
+          None
+          None
+        None
+        suite
+          for_stmt
+            var
+              name	ext
+            var
+              name	extensions
+            suite
+              for_stmt
+                var
+                  name	src
+                getattr
+                  var
+                    name	ext
+                  name	sources
+                suite
+                  if_stmt
+                    not_test
+                      funccall
+                        getattr
+                          getattr
+                            var
+                              name	os
+                            name	path
+                          name	exists
+                        arguments
+                          var
+                            name	src
+                    suite
+                      expr_stmt
+                        funccall
+                          var
+                            name	print
+                          arguments
+                            string	f"{ext.name}: -> [{ext.sources}]"
+                      raise_stmt
+                        funccall
+                          var
+                            name	Exception
+                          arguments
+                            string	f"""Cython-generated file '{src}' not found.
+                Cython is required to compile pandas from a development branch.
+                Please install Cython or download a release package of pandas.
+                """
+                        None
+                    elifs
+                    None
+                None
+            None
+      funcdef
+        name	build_extensions
+        parameters
+          name	self
+          None
+          None
+        None
+        suite
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	self
+                name	check_cython_extensions
+              arguments
+                getattr
+                  var
+                    name	self
+                  name	extensions
+          expr_stmt
+            funccall
+              getattr
+                var
+                  name	build_ext
+                name	build_extensions
+              arguments
+                var
+                  name	self
+				  
+				  
+klasör iç ve dış import

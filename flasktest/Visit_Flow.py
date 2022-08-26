@@ -63,6 +63,7 @@ class Visit_Floww(Visitor_Recursive):
     is_importname = 0
     is_funccall = 0
     last_pop = ''
+    list_false = []
 
     # list_group.append(main_group)
     # dwg.add(main_group)
@@ -323,8 +324,18 @@ class Visit_Floww(Visitor_Recursive):
                     break
             if self.valid == 1:
                 while len(self.stack_pos) > 0 and self.stack_pos[-1] <= tree.meta.start_pos:
-                    self.stack_pos.pop()
-                    stmt = self.stack_stmt.pop()
+                    stmt = ''
+                    if n.startswith('else'):
+                        inden_if = self.stack_stmt[-1].split()[2]
+                        if self.stack_stmt[-1].startswith('if'):
+                            self.last_pop = 'elifs'
+                            break
+                        else:
+                            self.stack_pos.pop()
+                            stmt = self.stack_stmt.pop()
+                    else:
+                        self.stack_pos.pop()
+                        stmt = self.stack_stmt.pop()
                     if stmt == 'class' + str(self.count_class):
                         if self.subgraph == 1 and self.count_class < 1:
                             self.valid = 0
@@ -352,14 +363,14 @@ class Visit_Floww(Visitor_Recursive):
                     if stmt == 'for' + str(self.count_for):
                         node = self.A.get_node(stmt)
                         self.A.add_edge(node, n, label='Yes')
-                    if stmt == 'else' + str(self.counter_if):
+                    if stmt == 'else' + str(self.counter_if) + ' ' + str(self.count_if):
                         self.flag_else = 1
                         stmt = self.stack_stmt.pop()
                         self.stack_pos.pop()
                         print("elif true")
                         print(self.A.nodes()[index - 1])
                         self.node_else = self.A.nodes()[index - 1]
-                    if stmt == 'elif' + str(self.counter_if): # else bağı
+                    if stmt == 'elif' + str(self.counter_if) + ' ' + str(self.count_if): # else bağı
                         # self.stack_stmt.pop()
                         # self.stack_pos.pop()
                         print("else true")
@@ -369,23 +380,28 @@ class Visit_Floww(Visitor_Recursive):
                         node = self.A.nodes()[index]
                         self.A.add_edge(node, n, label='False')
                     #if stmt == 'if' + str(self.count_if):
-                    if stmt.startswith('if'):
-                        c_if = stmt.split('if')[1]
-                        if 'elif' + str(c_if) in self.A.nodes() and self.new_else in self.A.nodes():
+                    if stmt.startswith('if'):   ######### eklemeler bu kısıma yapılacak
+                        counter = stmt.split()[1]
+                        indent = stmt.split()[2]
+                        list_if_nodes = [i for i in self.A.nodes() if i.startswith('if')]
+                        list_if_indents = [i.split()[2] for i in list_if_nodes]
+                        list_elif_nodes = [i for i in self.A.nodes() if i.startswith('elif')]
+                        list_elif_indents = [i.split()[2] for i in list_elif_nodes]
+                        if ('elif' in list_elif_nodes and str(self.count_if) in list_elif_indents) and self.new_else in self.A.nodes():
                             node1 = self.new_else
-                            index = self.A.nodes().index('elif' + str(c_if)) - 1
+                            index = self.A.nodes().index('elif' + str(self.counter_if) + ' ' + str(self.count_if)) - 1
                             node2 = self.A.nodes()[index]
                             self.A.add_edge(node1, n, label='False')
                             self.A.add_edge(node2, n)
                             self.A.add_edge(self.node_elif, n)
                             self.A.add_edge(self.node_else, n)
-                        elif 'elif' + str(c_if) in self.A.nodes():
-                            node1 = 'elif' + str(c_if)
-                            index = self.A.nodes().index('elif' + str(c_if)) - 1
+                        elif ('elif' in list_elif_nodes and str(self.count_if) in list_elif_indents):
+                            node1 = 'elif' + str(self.counter_if) + ' ' + str(self.count_if)
+                            index = self.A.nodes().index('elif' + str(self.counter_if) + ' ' + str(self.count_if)) - 1
                             node2 = self.A.nodes()[index]
                             self.A.add_edge(node1, n, label='False')
                             self.A.add_edge(node2, n)
-                            self.A.add_edge(self.node_elif, n)
+                            self.A.add_edge(self.node_elif, n) # count 1 den büyükse her ifden bir false çek if in true su zaten tek geliyor
                         elif self.new_else in self.A.nodes():
                             #node1 = 'else' + str(c_if)
                             index = self.A.nodes().index(self.new_else) - 1
@@ -393,11 +409,16 @@ class Visit_Floww(Visitor_Recursive):
                             #self.A.add_edge(node1, n,) #false
                             self.A.add_edge(node2, n)
                             self.A.add_edge(self.node_else, n)
-                        elif 'elif' + str(c_if) not in self.A.nodes() and self.new_else not in self.A.nodes():
-                            node1 = 'if' + str(c_if)
-                            node2 = self.A.nodes()[-2]
-                            self.A.add_edge(node1, n, label='False')
-                            self.A.add_edge(node2, n)
+                        elif ('elif' not in list_elif_nodes and str(self.count_if) not in list_elif_indents)and self.new_else not in self.A.nodes():
+                            if len(self.list_false) > 0:
+                                self.A.add_edges_from(self.list_false, n, label='False')
+                            elif int(indent) > 0:
+                                self.list_false.append('if' + counter)
+                            else:
+                                node1 = 'if' + counter
+                                node2 = self.A.nodes()[-2]
+                                self.A.add_edge(node1, n, label='False')
+                                self.A.add_edge(node2, n)
                         self.count_if -= 1
                         self.new_else = ''
                     # if stmt == 'elifs' + str(self.count_if):
@@ -412,8 +433,9 @@ class Visit_Floww(Visitor_Recursive):
                 #     elif stmt == 'class' + str(self.count_class):
                 #         self.count_class -= 1
                 #     self.valid = 0
-                if self.last_pop != 'elifs' + str(self.counter_if):
-                    if 'else' + str(self.counter_if) in self.stack_stmt and self.flag_else == 1:
+                #if self.last_pop != 'elifs' + str(self.counter_if) + ' ' + str(self.count_if):
+                if not self.last_pop.startswith('elifs'):
+                    if 'else' + str(self.counter_if) + ' ' + str(self.count_if) in self.stack_stmt and self.flag_else == 1:
                         index = self.A.nodes().index('if' + str(self.counter_if))
                         node = self.A.nodes()[index]
                         self.A.add_edge(node, n, label='False')
@@ -476,8 +498,9 @@ class Visit_Floww(Visitor_Recursive):
                     self.A.add_node(n=n, label=text, shape='rect')
                 elif stmt_type == 'for':
                     text = self.lines[tree.meta.line - 1][0:-1].strip()
+                    text = text[4:-1]
                     n = stmt_type + str(self.count_for)
-                    self.A.add_node(n=n, label=text, shape='diamond')
+                    self.A.add_node(n=n, label=text, shape='hexagon')
                 elif stmt_type == 'return':
                     n = stmt_type + str(self.count_return)
                     self.count_return += 1
@@ -513,8 +536,10 @@ class Visit_Floww(Visitor_Recursive):
                 else:
                     break
             if self.valid == 1: #or (self.subgraph == 1 and self.count_def > 0 and self.valid == 0):
+                # stmt_pop çağır elifs poplansın counter if ona göre düşecek
+                self.stmt_pop(tree, 'elifs' + str(self.counter_if) + ' ' + str(self.count_if))
                 self.stack_pos.append(1)
-                self.stack_stmt.append('elifs' + str(self.counter_if))
+                self.stack_stmt.append('elifs' + str(self.counter_if) + ' ' + str(self.count_if))
                 print("--elif pos--")
         except:
             print("elifs error")
@@ -540,17 +565,17 @@ class Visit_Floww(Visitor_Recursive):
                             self.valid = 1
                 else:
                     break
-            if (self.valid == 1 and 'elif' + str(self.counter_if) in self.stack_stmt) or (self.valid == 1 and self.stack_stmt[-1] == 'elifs' + str(self.counter_if)): #or (self.subgraph == 1 and self.count_def > 0 and self.valid == 0):
-                if 'elif' + str(self.counter_if) in self.stack_stmt:
-                    index = self.stack_stmt.index('elif' + str(self.counter_if))
-                elif 'elifs' + str(self.counter_if) in self.stack_stmt:
-                    index = self.stack_stmt.index('elifs' + str(self.counter_if))
+            if (self.valid == 1 and 'elif' + str(self.counter_if) + ' ' + str(self.count_if) in self.stack_stmt) or (self.valid == 1 and self.stack_stmt[-1] == 'elifs' + str(self.counter_if) + ' ' + str(self.count_if)): #or (self.subgraph == 1 and self.count_def > 0 and self.valid == 0):
+                if 'elif' + str(self.counter_if) + ' ' + str(self.count_if) in self.stack_stmt:
+                    index = self.stack_stmt.index('elif' + str(self.counter_if) + ' ' + str(self.count_if))
+                elif 'elifs' + str(self.counter_if) + ' ' + str(self.count_if) in self.stack_stmt:
+                    index = self.stack_stmt.index('elifs' + str(self.counter_if) + ' ' + str(self.count_if))
                 if self.stack_pos[index] <= tree.meta.start_pos:
-                    n = 'else' + str(self.counter_if)
+                    n = 'else' + str(self.counter_if) + ' ' + str(self.count_if)
                     text = self.lines[tree.meta.line - 1][0:-1].strip()
                     #self.A.add_node(n=n, label=text, shape='diamond')
                     self.stmt_pop(tree, n)
-                    self.stack_stmt.append('else' + str(self.counter_if))
+                    self.stack_stmt.append('else' + str(self.counter_if) + ' ' + str(self.count_if))
                     self.stack_pos.append(tree.meta.end_pos)
 
                 # if 'elif' + str(self.count_if) in self.stack_stmt:
@@ -609,11 +634,11 @@ class Visit_Floww(Visitor_Recursive):
             if self.valid == 1: #or (self.subgraph == 1 and self.count_def > 0 and self.valid == 0):
                 text = self.lines[tree.meta.line - 1][0:-1].strip()
                 print(text)
-                n = 'elif' + str(self.counter_if)
+                n = 'elif ' + str(self.counter_if) + ' ' + str(self.count_if)
                 self.A.add_node(n=n, label=text, shape='diamond')
                 self.stmt_pop(tree, n)
                 self.stack_pos.append(tree.meta.end_pos)
-                self.stack_stmt.append('elif'+str(self.counter_if))
+                self.stack_stmt.append('elif'+str(self.counter_if) + ' ' + str(self.count_if))
 
                 # n = 'elif' + str(self.count_if)
                 # self.A.add_node(n=n, label=text, shape='diamond')
@@ -644,7 +669,8 @@ class Visit_Floww(Visitor_Recursive):
                     break
             if self.valid == 1: #or (self.subgraph == 1 and self.count_def > 0 and self.valid == 0):
                 text = self.lines[tree.meta.line - 1][0:-1].strip()
-                n = 'if' + str(self.counter_if + 1)
+                text = text[3:-1]
+                n = 'if ' + str(self.counter_if + 1) + ' ' + str(self.count_if)
                 self.counter_if += 1
                 self.A.add_node(n=n, label=text, shape='diamond')
                 self.stmt_pop(tree, n)

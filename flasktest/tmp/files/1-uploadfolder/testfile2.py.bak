@@ -1,12 +1,11 @@
 from s import f
+from file3 import yazdir
+from test3 import fonksiyon
 def sum(n, n2):
-    x = n + n2
-    if x > 5:
-        print('x greater than 5')
-    elif x < 5:
-        x += 5
-    else:
-        print('invalid')
+    yazdir()
+    fonksiyon()
+def subtract(n, n2):
+    n -= n2
 x, y = input(),  input()
 b = 5
 c = sum(a,b)
@@ -21,4 +20,3 @@ elif a == 1:
 else:
     print(1)
 a+=16
-

@@ -16,7 +16,7 @@ import sys
 from sysconfig import get_config_vars
 
 import numpy
-from test import sum
+from pkg_resources import parse_version
 from setuptools import (
     Command,
     Extension,
@@ -27,7 +27,7 @@ from setuptools.command.build_ext import build_ext as _build_ext
 import versioneer
 
 cmdclass = versioneer.get_cmdclass()
-a.name.append()
+
 
 def is_platform_windows():
     return sys.platform == "win32" or sys.platform == "cygwin"
@@ -664,3 +664,4 @@ if __name__ == "__main__":
         ext_modules=maybe_cythonize(extensions, compiler_directives=directives),
         cmdclass=cmdclass,
     )
+a=x

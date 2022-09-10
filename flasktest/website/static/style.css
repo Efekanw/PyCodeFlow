@@ -1,0 +1,186 @@
+html {
+width:100%;
+height:100%;
+font-family: Helvetica, Arial, sans-serif !i;
+}
+body {
+min-height: 100%;
+background: #eee;
+line-height: 30px;
+width:100%;
+height:100%
+}
+.content{
+min-height:100%;
+height:100%;
+}
+.float-container{
+width: 100%;
+    overflow: hidden;
+    border: 10px solid #fff;}
+.center {text-align: center; solid green;}
+g { transition: all 1.5s; }
+.hide { visibility : hidden; opacity: 0; height: 0; }
+h2 {
+  color: #aaa;
+  font-size: 30px;
+  line-height: 40px;
+  font-style: italic;
+  font-weight: 200;
+  margin: 40px;
+  text-align: center;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7);
+}
+
+.box {
+display:none;
+  background:#f7f7f7;
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+}
+
+@media (min-width: 544px) {
+  .box {
+    margin: 30px auto 0;
+    max-width: 440px;
+    padding: 5px;
+  }
+}
+
+
+/* The list style
+-------------------------------------------------------------- */
+
+.directory-list {
+padding: 15px 15px 15px 32px;
+    margin: 0;
+}
+.directory-list ul {
+  margin-left: 10px;
+  padding-left: 2px;
+  border-left: 1px dashed #ddd;
+}
+
+.directory-list li {
+  list-style: none;
+  color: #888;
+  font-size: 17px;
+  font-style: italic;
+  font-weight: normal;
+}
+
+.directory-list a {
+  border-bottom: 1px solid transparent;
+  color: #888;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.directory-list a:hover {
+  border-color: #eee;
+  color: #000;
+}
+
+.directory-list .folder,
+.directory-list .folder > a {
+  color: #777;
+  font-weight: bold;
+}
+
+
+/* The icons
+-------------------------------------------------------------- */
+
+.directory-list li:before {
+  margin-right: 10px;
+  content: "";
+  height: 32px;
+  vertical-align: middle;
+  width: 32px;
+  background-repeat: no-repeat;
+  display: inline-block;
+  /* file icon by default */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='lightgrey' d='M85.714,42.857V87.5c0,1.487-0.521,2.752-1.562,3.794c-1.042,1.041-2.308,1.562-3.795,1.562H19.643 c-1.488,0-2.753-0.521-3.794-1.562c-1.042-1.042-1.562-2.307-1.562-3.794v-75c0-1.487,0.521-2.752,1.562-3.794 c1.041-1.041,2.306-1.562,3.794-1.562H50V37.5c0,1.488,0.521,2.753,1.562,3.795s2.307,1.562,3.795,1.562H85.714z M85.546,35.714 H57.143V7.311c3.05,0.558,5.505,1.767,7.366,3.627l17.41,17.411C83.78,30.209,84.989,32.665,85.546,35.714z' /></svg>");
+  background-position: center 2px;
+  background-size: 60% auto;
+}
+
+.directory-list li.folder:before {
+  /* folder icon if folder class is specified */
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='lightblue' d='M96.429,37.5v39.286c0,3.423-1.228,6.361-3.684,8.817c-2.455,2.455-5.395,3.683-8.816,3.683H16.071 c-3.423,0-6.362-1.228-8.817-3.683c-2.456-2.456-3.683-5.395-3.683-8.817V23.214c0-3.422,1.228-6.362,3.683-8.817 c2.455-2.456,5.394-3.683,8.817-3.683h17.857c3.422,0,6.362,1.228,8.817,3.683c2.455,2.455,3.683,5.395,3.683,8.817V25h37.5 c3.422,0,6.361,1.228,8.816,3.683C95.201,31.138,96.429,34.078,96.429,37.5z' /></svg>");
+  background-position: center top;
+  background-size: 75% auto;
+}
+
+.directory-list li.file:before {
+  width:32px;
+  height:32px;
+}
+
+.section-left {
+overflow:auto;
+min-height:100vh;
+height:100%;
+background-color:#68b7e0;
+padding:30px;
+}
+.section-right {
+display:grid;
+justify-content:center;
+overflow-y:scroll;
+}
+
+/** Upload file input **/
+.file-upload{display:block;text-align:center;font-size: 12px;margin-bottom:16px;}
+.file-upload .file-select{display:block;border: 2px solid #dce4ec;color: #34495e;cursor:pointer;height:40px;line-height:40px;text-align:left;background:#FFFFFF;overflow:hidden;position:relative;}
+.file-upload .file-select .file-select-button{background:#dce4ec;padding:0 10px;display:inline-block;height:40px;line-height:40px;}
+.file-upload .file-select .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
+.file-upload .file-select:hover{border-color:#34495e;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload .file-select:hover .file-select-button{background:#34495e;color:#FFFFFF;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload.active .file-select{border-color:#3fa46a;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload.active .file-select .file-select-button{background:#3fa46a;color:#FFFFFF;transition:all .2s ease-in-out;-moz-transition:all .2s ease-in-out;-webkit-transition:all .2s ease-in-out;-o-transition:all .2s ease-in-out;}
+.file-upload .file-select input[type=file]{z-index:100;cursor:pointer;position:absolute;height:100%;width:100%;top:0;left:0;opacity:0;filter:alpha(opacity=0);}
+.file-upload .file-select.file-select-disabled{opacity:0.65;}
+.file-upload .file-select.file-select-disabled:hover{cursor:default;display:block;border: 2px solid #dce4ec;color: #34495e;cursor:pointer;height:40px;line-height:40px;margin-top:5px;text-align:left;background:#FFFFFF;overflow:hidden;position:relative;}
+.file-upload .file-select.file-select-disabled:hover .file-select-button{background:#dce4ec;color:#666666;padding:0 10px;display:inline-block;height:40px;line-height:40px;}
+.file-upload .file-select.file-select-disabled:hover .file-select-name{line-height:40px;display:inline-block;padding:0 10px;}
+
+.clickable_folder, .clickable_file {
+cursor:pointer;
+}
+
+.file-upload-section {
+display: flex;
+justify-content: center;
+}
+
+header {
+padding: 15px 0;
+}
+
+.header-logo img {
+max-width: 100%;
+padding-left:50px;
+}
+
+.header-text{
+    font-size: 32px;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+.node, .edge{
+transition: color .2s ease-in-out,background-color .2s ease-in-out,border-color .2s ease-in-out,box-shadow .2s ease-in-out;
+}
+
+.clickable polygon{
+stroke:red;
+fill: palevioletred;
+}
+.invis-edge, .invis-node{
+display:none;
+}
+.cluster > polygon{
+stroke:none;
+}

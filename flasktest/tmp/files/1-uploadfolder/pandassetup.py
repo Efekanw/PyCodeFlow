@@ -14,6 +14,7 @@ import platform
 import shutil
 import sys
 from sysconfig import get_config_vars
+
 import numpy
 from pkg_resources import parse_version
 from setuptools import (
@@ -663,3 +664,4 @@ if __name__ == "__main__":
         ext_modules=maybe_cythonize(extensions, compiler_directives=directives),
         cmdclass=cmdclass,
     )
+a=x

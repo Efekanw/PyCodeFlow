@@ -1,0 +1,10 @@
+<ul class="directory-list">
+    {%- for item in tree.children recursive %}
+    <li class="{{ 'folder' if item.children else 'file' }}">
+        <label class="{{ 'clickable_folder' if item.children else 'clickable_file' }}" data-file-name="{{ item.name }}">{{ item.name }}</label>
+        {%- if item.children -%}
+        <ul>{{ loop(item.children) }}</ul>
+        {%- endif %}
+    </li>
+    {%- endfor %}
+</ul>

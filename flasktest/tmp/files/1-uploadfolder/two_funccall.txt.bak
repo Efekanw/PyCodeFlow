@@ -1,0 +1,9 @@
+from testfile2 import sum
+from testfile2 import subtract
+a = 5
+b = 7
+def fonskyion():
+    fonk = 2
+sum(a,b)
+subtract(a,b)
+a = a

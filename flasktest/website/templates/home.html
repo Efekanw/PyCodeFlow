@@ -1,204 +1,155 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" style="width:100%;height:100%;">
-    <head>
-        <meta http-equiv="Content-Type" content="text/html, charset=utf-8, width=device-width, initial-scale=1.0" name="viewport"/>
-        <title>Title of document</title>
-
-        <style>
-            g { transition: all 1.5s; }
-            .hide { visibility : hidden; opacity: 0; height: 0; }
-            body { min-height: 100vh;}
-            .float-container{ border 10px solid #fff;}
-            .center {text-align: center; solid green;}
-            body {
-            background: #eee;
-            font-family: "times new roman", serif;
-            line-height: 30px;
-             }
-
-            h2 {
-              color: #aaa;
-              font-size: 30px;
-              line-height: 40px;
-              font-style: italic;
-              font-weight: 200;
-              margin: 40px;
-              text-align: center;
-              text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7);
-            }
-
-            .box {
-              background:#68b7e0;
-              border-radius: 2px;
-              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-            }
-
-            @media (min-width: 544px) {
-              .box {
-                margin: 5px auto;
-                max-width: 440px;
-                padding: 5px;
-              }
-            }
-
-
-            /* The list style
-            -------------------------------------------------------------- */
-
-            .directory-list ul {
-              margin-left: 10px;
-              padding-left: 2px;
-              border-left: 1px dashed #ddd;
-            }
-
-            .directory-list li {
-              list-style: none;
-              color: #888;
-              font-size: 17px;
-              font-style: italic;
-              font-weight: normal;
-            }
-
-            .directory-list a {
-              border-bottom: 1px solid transparent;
-              color: #888;
-              text-decoration: none;
-              transition: all 0.2s ease;
-            }
-
-            .directory-list a:hover {
-              border-color: #eee;
-              color: #000;
-            }
-
-            .directory-list .folder,
-            .directory-list .folder > a {
-              color: #777;
-              font-weight: bold;
-            }
-
-
-            /* The icons
-            -------------------------------------------------------------- */
-
-            .directory-list li:before {
-              margin-right: 10px;
-              content: "";
-              height: 20px;
-              vertical-align: middle;
-              width: 20px;
-              background-repeat: no-repeat;
-              display: inline-block;
-              /* file icon by default */
-              background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='lightgrey' d='M85.714,42.857V87.5c0,1.487-0.521,2.752-1.562,3.794c-1.042,1.041-2.308,1.562-3.795,1.562H19.643 c-1.488,0-2.753-0.521-3.794-1.562c-1.042-1.042-1.562-2.307-1.562-3.794v-75c0-1.487,0.521-2.752,1.562-3.794 c1.041-1.041,2.306-1.562,3.794-1.562H50V37.5c0,1.488,0.521,2.753,1.562,3.795s2.307,1.562,3.795,1.562H85.714z M85.546,35.714 H57.143V7.311c3.05,0.558,5.505,1.767,7.366,3.627l17.41,17.411C83.78,30.209,84.989,32.665,85.546,35.714z' /></svg>");
-              background-position: center 2px;
-              background-size: 60% auto;
-            }
-
-            .directory-list li.folder:before {
-              /* folder icon if folder class is specified */
-              background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><path fill='lightblue' d='M96.429,37.5v39.286c0,3.423-1.228,6.361-3.684,8.817c-2.455,2.455-5.395,3.683-8.816,3.683H16.071 c-3.423,0-6.362-1.228-8.817-3.683c-2.456-2.456-3.683-5.395-3.683-8.817V23.214c0-3.422,1.228-6.362,3.683-8.817 c2.455-2.456,5.394-3.683,8.817-3.683h17.857c3.422,0,6.362,1.228,8.817,3.683c2.455,2.455,3.683,5.395,3.683,8.817V25h37.5 c3.422,0,6.361,1.228,8.816,3.683C95.201,31.138,96.429,34.078,96.429,37.5z' /></svg>");
-              background-position: center top;
-              background-size: 75% auto;
-            }
-        </style>
-    </head>
-    <body style="width:100%;height:100%;">
-            <div class="float-container">
-                <div style="overflow: auto;width:218px; background-color:#68b7e0; float:left;">
-                    <form id="package_form" action="" method="POST" enctype="multipart/form-data">
-                        <div>
-                            <p>Upload:</p>
-                            <p><input id="upload_button" type="file" class="btn btn-default btn-xs" name="file"/></p>
-                            <p><input id="submit_button" type="submit" class="btn btn-success" value="Upload"/></p>
-                            {% with messages = get_flashed_messages() %}
-                                {% if messages %}
-                                <ul class='flashes'>
-                                    {% for message in messages %}
-                                    <li>{{ message }}</li>
-                                    {% endfor %}
-                                </ul>
-                                {% endif %}
-                            {% endwith %}
-                        </div>
-                    </form>
-                    <form id="form2" action="" method="post" name="filename_list" onsubmit="return false">
-                        <div class="box">
-                            <ul class="directory-list">
-                            {%- for item in tree.children recursive %}
-                                <li class="folder">
-                                    <label class="clickable_label">{{ item.name }}
-                                        <input id="label_input" type="hidden" name="filename"  value="{{ item.name }}"/>
-                                    </label>
-
-                                    {%- if item.children -%}
-                                        <ul >{{ loop(item.children) }}</ul>
-                                    {%- endif %}
-                                </li>
-                            {%- endfor %}
-                            </ul>
-                        </div>
-                    </form>
-                </div>
-            <div class = "center" style="background-color:#2eb086;  height: 2000px; width:1300px; float:right;  overflow-x: scroll; overflow-y: scroll;">
-                {{svg}}
+<head>
+    <meta http-equiv="Content-Type" content="text/html, charset=utf-8, width=device-width, initial-scale=1.0"
+          name="viewport"/>
+    <title>Flow Diagram with SVG</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+    <div class="row">
+        <div class="col-3">
+            <div class="header-logo">
+                <img src="{{ url_for('static', filename='innova-logo.png') }}" alt="Innova Logo" width="306"
+                     height="56">
             </div>
         </div>
-        <script src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.js"
-          integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-          crossorigin="anonymous"></script>
-        <script>
-                $(document).on('submit', '#form2', function(e)
-                {
-                   console.log('hello');
-                   e.stopImmediatePropagation();
-                   $.ajax({
-                     type:'POST',
-                     url:'/',
-                     data:{
-                       todo:$("#filename").val()
-                     },
-                     success:function()
-                     {
-                       alert('saved');
-                     }
-                  })
-                  console.log("prevent")
-                });</script>
-        <script type="text/javascript">
-           console.log("in");
-           var elements = document.getElementsByClassName("clickable_label");
-           for (var i = 0; i < elements.length; i++) {
-                  elements[i].addEventListener('click', label_click, false);
-           }
-           var form = document.getElementById("form2");
-           function label_click()
-           {
-                str = this.innerText;
-                console.log(str)
-                const input = document.getElementById("label_input");
-                input.value = str
-                document.getElementById('form2').submit()
-                $("form2").submit(function(e){
-                    document.getElementById('form2').submit()
-                    e.preventDefault()
-                });
+        <div class="col-9">
+            <div class="header-text">PyCodeFlow</div>
+        </div>
+    </div>
+</header>
+<div class="content">
+    <div class="row">
+        <div class="col-3 p-0">
+            <div class="section-left">
+                <div class="file-upload-section">
+                    <form id="package_form" action="/upload-file" method="POST" enctype="multipart/form-data"
+                          onsubmit="return:false;">
+                        <p>Upload your compressed Python project file (.zip, .rar)</p>
+                        <!--<p><input id="upload_button" type="file" class="btn btn-default btn-xs" name="file"/></p>-->
+                        <div class="file-upload">
+                            <div class="file-select">
+                                <div class="file-select-button" id="fileName">Choose File</div>
+                                <div class="file-select-name" id="noFile">No file chosen...</div>
+                                <input type="file" name="file" id="chooseFile">
+                            </div>
+                        </div>
+                        <a id="submit_upload_button" href="javascript:;" class="btn btn-success">Upload</a>
+                        <!--{% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                        <ul class='flashes'>
+                            {% for message in messages %}
+                            <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% endwith %}-->
+                    </form>
+                </div>
+                <div id="file-tree" class="box"></div>
+            </div>
+        </div>
+        <div class="col-9 p-0" style="background-color: lightblue">
+            <div id="show-svg" class="section-right"></div>
+        </div>
+    </div>
+</div>
 
-           }
-           function submitForm() {
-                str = "sd";
-                var http = new XMLHttpRequest();
-                http.open("POST", "main.py", true);
-                http.setRequestHeader("Content-type","application/x-www-form-urlencoded");
-                var params = "search=" + str; // probably use document.getElementById(...).value
-                http.send(params);
-                http.onload = function() {
-                    alert(http.responseText);
-           }
+<script src="{{ url_for('static', filename='jquery-3.6.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+$('#chooseFile').bind('change', function () {
+  var filename = $("#chooseFile").val();
+  if (/^\s*$/.test(filename)) {
+    $(".file-upload").removeClass('active');
+    $("#noFile").text("No file chosen...");
+  }
+  else {
+    $(".file-upload").addClass('active');
+    $("#noFile").text(filename.replace("C:\\fakepath\\", ""));
+  }
+});
+$('#submit_upload_button').on('click',function(){
+var form = $(this).parents("form");
+var formData = new FormData(form[0]);
+$.ajax({
+    type: "POST",
+    url: form.attr('action'),
+    processData: false,
+    contentType: false,
+    data: formData
+  }).done(function(response){
+  if(response != null) {
+  $('#file-tree').show();
+  $('#file-tree').html(response);
+  }
+  });
+});
+
+$(document).on('click','#file-tree .folder .clickable_folder', function(){
+$(this).next('ul').fadeToggle('slow');
+});
+
+
+$(document).on('click','#file-tree .folder .clickable_file', function(){
+var formData = new FormData();
+formData.append('filename', $(this).html());
+$.ajax({
+    type: "POST",
+    url: "/show-svg",
+    processData: false,
+    contentType: false,
+    data: formData
+  }).done(function(response){
+  if(response != null) {
+$('#show-svg').html(response);
+<!--$('#show-svg svg').removeAttr('width');-->
+<!--$('#show-svg svg').removeAttr('height');-->
+  }
+  });
+});
+
+$(document).on('click','.node.clickable', function(){
+var class_list = $(this)[0].classList;
+var filename = class_list[3];
+var directory_list_file = $('.directory-list').find("li label[data-file-name='"+filename+"']");
+var node_name = $(this).find("text").text();
+var getClass = this.className.baseVal;
+
+var num = getClass.split(" ")[2];
+var numstr = num.toString();
+const str = numstr;
+var stringnum = '_' + str;
+var node = '.invis-node' + stringnum;
+var edge = '.invis-edge' + stringnum;
+<!--$(node).fadeToggle('slow');-->
+<!--$(edge).fadeToggle('slow');-->
+$(this).toggleClass('clicked');
+if($(this).hasClass('clicked')){
+directory_list_file.text(filename + ' (' + node_name + ')');
+directory_list_file.css("color","palevioletred");
+$(node).fadeIn('slow');
+$(edge).fadeIn('slow');
+}else{
+directory_list_file.text(filename);
+directory_list_file.css("color","#888");
+$(node).fadeOut('slow');
+$(edge).fadeOut('slow');
 }
-        </script>
-    </body>
 
+
+<!--$(this).prev('.edge.invis-edge').fadeToggle('slow');-->
+});
+
+
+});
+
+
+
+</script>
+</body>
 </html>

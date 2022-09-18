@@ -8,4 +8,6 @@ while module in px:
             _pxi_dep[module] = pxi_files
         elif a < b:
             a+=x
+        for a in j:
+            print('k')
 a = b

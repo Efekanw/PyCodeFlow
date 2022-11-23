@@ -1,7 +1,7 @@
 setuptools~=63.4.1
 pip~=22.1.2
 zlib~=1.2.12
-wheel~=0.37.1
+wheel~=0.38.0
 openssl~=1.1.1q
 pygraphviz~=1.9
 lark-parser~=0.12.0

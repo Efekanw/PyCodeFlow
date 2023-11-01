@@ -6,4 +6,4 @@ openssl~=1.1.1q
 pygraphviz~=1.9
 lark-parser~=0.12.0
 flask~=2.0.3
-werkzeug~=2.2.2
+werkzeug~=3.0.1
